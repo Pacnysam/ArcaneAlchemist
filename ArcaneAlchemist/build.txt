@@ -1,0 +1,3 @@
+displayName = Arcane Alchemist
+author = Pacnysam
+version = 0.1

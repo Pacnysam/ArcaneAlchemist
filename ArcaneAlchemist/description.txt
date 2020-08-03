@@ -1,0 +1,1 @@
+Arcane Alchemist focuses on adding an alchemist class, and only that.
