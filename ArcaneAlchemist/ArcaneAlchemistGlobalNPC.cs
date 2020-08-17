@@ -17,6 +17,9 @@ namespace ArcaneAlchemist
 
             if (npc.type == NPCID.Harpy && Main.rand.Next(7) == 0)
                 Item.NewItem(npc.getRect(), mod.ItemType("StarRod"), 1);
+
+            if ((Main.player[Player.FindClosest(npc.position, npc.width, npc.height)].ZoneBeach) && Main.rand.Next(2) == 0)
+                Item.NewItem(npc.getRect(), mod.ItemType("SplashGem"), Main.rand.Next(1, 4));
         }
     }
 }
