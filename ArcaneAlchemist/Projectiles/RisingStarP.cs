@@ -23,6 +23,7 @@ namespace ArcaneAlchemist.Projectiles
             projectile.friendly = true;
             projectile.penetrate = -1;
             projectile.tileCollide = false;
+            projectile.timeLeft = 120;
         }
 
         public override void AI()
@@ -43,6 +44,8 @@ namespace ArcaneAlchemist.Projectiles
             if (projectile.Hitbox.Intersects(new Rectangle((int)player.Center.X - 2, (int)player.Center.Y - 14, 4, 4)) || projectile.timeLeft == 1)
             {
                 projectile.position = player.Center;
+                Player p = Main.player[(int)projectile.ai[0]];
+                p.statLife += (int)(2);
                 projectile.Kill();
             }
         }
@@ -52,9 +55,6 @@ namespace ArcaneAlchemist.Projectiles
         {
             for (float k = 0; k < 6.28f; k += 0.5f)
                 Dust.NewDustPerfect(projectile.Center, DustType<RisingStar>(), Vector2.One.RotatedBy(k) * 2);
-            
-                Player p = Main.player[(int)projectile.ai[0]];
-                p.statLife += (int)(2);
             
         }
     }

@@ -8,7 +8,7 @@ namespace ArcaneAlchemist.Items.Empowerments
 	public class StarRod : AlchemistItem
 	{
 		public override void SetStaticDefaults() {
-            Tooltip.SetDefault("Gives all arcane weapons lifesteal and Makes a star fall to damage enemies \n''It came from the light of the stars''");
+            Tooltip.SetDefault("Gives all arcane weapons lifesteal and Makes a star shoot to damage enemies \n''It came from the light of the stars''");
         }
 
 		public override void SafeSetDefaults() 

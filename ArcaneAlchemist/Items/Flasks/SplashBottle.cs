@@ -38,9 +38,8 @@ namespace ArcaneAlchemist.Items.Flasks
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemType<BasicFlask>(), 1);
-            recipe.AddIngredient(ItemID.BottledWater, 8);
-            recipe.AddIngredient(ItemID.Gel, 6);
-            recipe.AddTile(TileID.Bottles);
+            recipe.AddIngredient(ItemType<SplashGem>(), 8);
+            recipe.AddTile(TileID.Solidifier);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }
