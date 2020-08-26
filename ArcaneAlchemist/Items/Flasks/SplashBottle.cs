@@ -5,6 +5,7 @@ using ArcaneAlchemist.Projectiles;
 using Terraria;
 using ArcaneAlchemist.Dusts;
 using Microsoft.Xna.Framework;
+using ArcaneAlchemist.Items.Placeable;
 
 namespace ArcaneAlchemist.Items.Flasks
 {
@@ -17,7 +18,7 @@ namespace ArcaneAlchemist.Items.Flasks
 
         public override void SafeSetDefaults() 
 		{
-            item.damage = 13;
+            item.damage = 11;
             item.width = 28;
             item.height = 28;
             item.useTime = 28;
@@ -101,7 +102,7 @@ namespace ArcaneAlchemist.Items.Flasks
             Gore.NewGore(projectile.position, -projectile.oldVelocity * 0.2f, 704, 1f);
             Gore.NewGore(projectile.position, -projectile.oldVelocity * 0.2f, 705, 1f);
 
-            Projectile.NewProjectile(projectile.position, (projectile.velocity * 0), ProjectileType<SplashBomb>(), (int)(projectile.damage*0.6), 0f, projectile.owner, 0f, 0f);
+            Projectile.NewProjectile(projectile.position, (projectile.velocity * 0), ProjectileType<SplashBomb>(), (int)(projectile.damage * 0.5), 0f, projectile.owner, 0f, 0f);
 
         }
     }
@@ -130,9 +131,8 @@ namespace ArcaneAlchemist.Items.Flasks
 
             if (Main.rand.NextFloat() < 0.3f)
             {
-                
+                Projectile.NewProjectile(projectile.position + new Vector2(Main.rand.Next(-100, 101), -Main.screenHeight * 0.8f), (projectile.velocity * 0), ProjectileType<Splash>(), (int)(projectile.damage * 2), 0f, projectile.owner, 0f, 0f);
             }
-            Projectile.NewProjectile(projectile.position + new Vector2(Main.rand.Next(-100, 101), -Main.screenHeight * 0.8f), (projectile.velocity * 0), ProjectileType<Splash>(), (int)(projectile.damage * 0.8), 0f, projectile.owner, 0f, 0f);
             
             if (FrameCountMeter >= 3)
             {
@@ -156,10 +156,9 @@ namespace ArcaneAlchemist.Items.Flasks
         public override void SetDefaults()
         {
             projectile.friendly = true;
-            projectile.melee = true;
             projectile.timeLeft = 120;
-            projectile.width = 10;
-            projectile.height = 10;
+            projectile.width = 12;
+            projectile.height = 12;
             projectile.penetrate = 1;
             projectile.ignoreWater = true;
             projectile.alpha = 50;
@@ -167,7 +166,9 @@ namespace ArcaneAlchemist.Items.Flasks
 
         public override void AI()
         {
-            if (Main.LocalPlayer.HasBuff(BuffType<Buffs.RisingStar>()) && Main.rand.NextFloat() < 0.001f)
+            projectile.ai[1]++;
+
+            if (Main.LocalPlayer.HasBuff(BuffType<Buffs.RisingStar>()) && Main.rand.NextFloat() < 0.001)
             {
                 Projectile.NewProjectile(projectile.position, (projectile.velocity * 0), ProjectileType<RisingStarP>(), (int)(projectile.damage), 0f, projectile.owner, 0f, 0f);
             }
@@ -177,8 +178,11 @@ namespace ArcaneAlchemist.Items.Flasks
                 Projectile.NewProjectile(projectile.position, (projectile.velocity * 0), ProjectileType<FallingThunderP>(), (int)(projectile.damage), 0f, projectile.owner, 0f, 0f);
             }
 
-            projectile.velocity.Y = (Main.rand.Next(6, 30));
-            projectile.velocity.X = Main.rand.Next(-10, 10);
+            if (projectile.ai[1] <= 2) 
+            {
+                projectile.velocity.Y = (Main.rand.Next(12, 30));
+                projectile.velocity.X = Main.rand.Next(-3, 3);
+            }
 
             Dust dust;
             dust = Terraria.Dust.NewDustPerfect(projectile.position, DustType<SplashDust1>(), new Vector2(0f, 0f), 0, new Color(150, 150, 150), 0.6f);

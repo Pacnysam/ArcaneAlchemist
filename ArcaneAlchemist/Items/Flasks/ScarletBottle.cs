@@ -21,8 +21,8 @@ namespace ArcaneAlchemist.Items.Flasks
             item.damage = 8;
             item.width = 18;
             item.height = 24;
-            item.useTime = 55;
-            item.useAnimation = 55;
+            item.useTime = 50;
+            item.useAnimation = 50;
             item.useStyle = 1;
             item.knockBack = 3;
             item.value = 5000;

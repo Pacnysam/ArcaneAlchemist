@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using ArcaneAlchemist.Dusts;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -22,8 +23,8 @@ namespace ArcaneAlchemist.Items.Placeable
 			item.maxStack = 99;
 			item.value = 7500;
 			item.useStyle = 1;
-            item.useAnimation = 25;
-            item.useTime = 20;
+            item.useTime = 10;
+            item.useAnimation = 10;
             item.autoReuse = true;
 			item.consumable = true;
             item.createTile = TileType<SplashBarT>();
@@ -34,7 +35,7 @@ namespace ArcaneAlchemist.Items.Placeable
 		{
 			ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemType<SplashGem>(), 5);
-            recipe.AddTile(TileID.Furnaces);
+            recipe.AddTile(TileID.Solidifier);
             recipe.SetResult(this);
 			recipe.AddRecipe();
 		}
@@ -48,6 +49,8 @@ namespace ArcaneAlchemist.Items.Placeable
             Main.tileSolid[Type] = true;
             Main.tileSolidTop[Type] = true;
             Main.tileFrameImportant[Type] = true;
+            soundType = SoundID.Splash;
+            dustType = DustType<SplashDust1>();
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileObjectData.newTile.StyleHorizontal = true;

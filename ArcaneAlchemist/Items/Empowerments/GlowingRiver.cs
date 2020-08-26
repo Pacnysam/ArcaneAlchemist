@@ -1,3 +1,4 @@
+using ArcaneAlchemist.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -8,7 +9,7 @@ namespace ArcaneAlchemist.Items.Empowerments
 	public class GlowingRiver : AlchemistItem
 	{
 		public override void SetStaticDefaults() {
-            Tooltip.SetDefault("Greatly increases arcane damage \n''It came from the light of the stars''");
+            Tooltip.SetDefault("Greatly increases arcane damage \n''It came from the depths of the dungeon''");
         }
 
 		public override void SafeSetDefaults() 
@@ -16,9 +17,9 @@ namespace ArcaneAlchemist.Items.Empowerments
             item.damage = 24;
             item.width = 32;
             item.height = 32;
-            item.shoot = ProjectileType<Star>();
+            item.shoot = ProjectileType<FallingThunderP>();
             item.shootSpeed = 16f;
-            item.buffType = BuffType<Buffs.RisingStar>();
+            item.buffType = BuffType<Buffs.FallingThunder>();
             item.buffTime = 300;
             item.useStyle = 4;
             item.UseSound = SoundID.Item4;

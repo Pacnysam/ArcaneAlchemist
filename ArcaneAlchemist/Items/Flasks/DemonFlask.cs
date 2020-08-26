@@ -21,7 +21,7 @@ namespace ArcaneAlchemist.Items.Flasks
 
         public override void SafeSetDefaults() 
 		{
-            item.damage = 500;
+            item.damage = 30;
             item.width = 48;
             item.height = 48;
             item.useTime = 60;
@@ -38,16 +38,15 @@ namespace ArcaneAlchemist.Items.Flasks
             item.noUseGraphic = true;
         }
 
-        //public override void AddRecipes()
-        //{
-            //ModRecipe recipe = new ModRecipe(mod);
-            //recipe.AddIngredient(ItemType<ScarletBottle>(), 1);
-            //recipe.AddIngredient(ItemID.InfernoFork, 1);
-            //recipe.AddTile(TileID.AlchemyTable);
-            //recipe.AddTile(TileID.LunarCraftingStation);
-            //recipe.SetResult(this);
-            //recipe.AddRecipe();
-        //}
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemType<ScarletBottle>(), 1);
+            recipe.AddIngredient(ItemID.HellstoneBar, 20);
+            recipe.AddTile(TileID.AlchemyTable);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
+        }
     }
 
     public class DemonFlaskP : ModProjectile
@@ -93,7 +92,11 @@ namespace ArcaneAlchemist.Items.Flasks
 
         public override void Kill(int timeLeft)
         {
-            Projectile.NewProjectile(projectile.position, (projectile.velocity * 0), ProjectileType<DemonBurst>(), (int)(projectile.damage * 0.25), 0f, projectile.owner, 0f, 0f);
+            Projectile.NewProjectile(projectile.position, (projectile.velocity * 0), ProjectileType<DemonBurst>(), (int)(projectile.damage), 0f, projectile.owner, 0f, 0f);
+
+            Vector2 soundPoint = (Main.player[Main.myPlayer].position + projectile.Center * 2) / 3;
+
+            Main.PlaySound(2, soundPoint, 119);
         }
     }
 
@@ -108,10 +111,9 @@ namespace ArcaneAlchemist.Items.Flasks
 
         public override void SetDefaults()
         {
-            projectile.width = 600;
-            projectile.height = 600;
-
-            projectile.timeLeft = 120;
+            projectile.width = 300;
+            projectile.height = 300;
+            projectile.timeLeft = 60;
             projectile.penetrate = -1;
             projectile.friendly = true;
             projectile.tileCollide = false;
@@ -122,140 +124,27 @@ namespace ArcaneAlchemist.Items.Flasks
 
         public override void AI()
         {
-            Player player = Main.player[projectile.owner];
-            fireState(player);
+            if (projectile.ai[1] <= 1)
+            {
+                Player player = Main.player[projectile.owner];
+                fireState(player);
+            }
+
+            Dust dust = Main.dust[Terraria.Dust.NewDust(projectile.Center, 1, 1, 174, Main.rand.Next(-20, 20), Main.rand.Next(-20, 20), 0, new Color(255, 255, 255), 3f)];
+            dust = Main.dust[Terraria.Dust.NewDust(projectile.Center, 1, 1, 174, Main.rand.Next(-20, 20), Main.rand.Next(-9, 9), 0, new Color(255, 255, 255), 3f)];
+            dust = Main.dust[Terraria.Dust.NewDust(projectile.Center, 1, 1, 174, Main.rand.Next(-20, 20), Main.rand.Next(-9, 9), 0, new Color(255, 255, 255), 3f)];
+            dust = Main.dust[Terraria.Dust.NewDust(projectile.Center, 1, 1, 174, Main.rand.Next(-20, 20), Main.rand.Next(-9, 9), 0, new Color(255, 255, 255), 3f)];
+            dust = Main.dust[Terraria.Dust.NewDust(projectile.Center, 1, 1, 174, Main.rand.Next(-20, 20), Main.rand.Next(-9, 9), 0, new Color(255, 255, 255), 3f)];
+            dust.noGravity = true;
         }
         public override void Kill(int timeLeft)
         {
-            explosionEnd();
+
         }
 
         private void fireState(Player player)
         {
-            explosionStart();
             pushAway();
-
-            //projectile.scale += (Explosion.explosionScale - 1) / Explosion.fireTicksTime;
-        }
-        
-        public void explosionStart()
-        {
-            //Always make it sound closer
-            Vector2 soundPoint = (Main.player[Main.myPlayer].position + projectile.Center * 2) / 3;
-
-            Main.PlaySound(2, soundPoint, 119);
-        }
-        public void explosionFX(float normalTime)
-        {
-            //explosion ball dust indicates size
-            for (int i = 0; i < (15 + 3) * 3 * normalTime; i++)
-            {
-                Vector2 velocity = new Vector2(
-                    Main.rand.Next(-600, 600 + 1),
-                    Main.rand.Next(-600, 600 + 1));
-
-                //make into a circle
-                Vector2 normal = new Vector2(velocity.X * 0.5f, velocity.Y * 0.5f);
-                normal.Normalize();
-                normal.X = Math.Abs(normal.X);
-                normal.Y = Math.Abs(normal.Y);
-                //make dust move distance of projectile size
-                float log = (float)Math.Log((double)(velocity.X * velocity.X + velocity.Y * velocity.Y));
-
-                //make into a ring
-                float ring = 600 / velocity.Length();
-
-                //explosion INNER
-                Dust d = Dust.NewDustDirect(projectile.Center - new Vector2(16, 16), 32, 32, 262,
-                    velocity.X * normal.X / log,
-                    velocity.Y * normal.Y / log,
-                    0, Color.White, 1f + 15 * 0.3f);
-                d.noGravity = true;
-                d.velocity *= 0.6f;
-                //explosion OUTER
-                d = Dust.NewDustDirect(projectile.Center - new Vector2(16, 16), 32, 32, 262,
-                    velocity.X * ring / log,
-                    velocity.Y * ring / log,
-                    0, Color.White, 0.6f + 15 * 0.1f);
-                d.noGravity = true;
-                d.velocity *= 0.5f;
-
-                if (i % 2 == 0)
-                {
-                    //explosion shockwave horizontal
-                    d = Dust.NewDustDirect(projectile.Center - new Vector2(16, 16), 32, 32, 262,
-                        velocity.X * ring * 1.5f / log,
-                        velocity.Y * ring * 0.3f / log,
-                        0, Color.White, 0.2f);
-                    d.noGravity = true;
-                    d.fadeIn = 0.4f + Main.rand.NextFloat() * 0.4f + 15 * 0.1f;
-                    d.velocity *= 0.5f;
-
-                    //explosion shockwave vertical
-                    d = Dust.NewDustDirect(projectile.Center - new Vector2(16, 16), 32, 32, 262,
-                        velocity.X * ring * 0.2f / log,
-                        velocity.Y * ring * 1.5f / log,
-                        0, Color.White, 0.2f);
-                    d.noGravity = true;
-                    d.fadeIn = 0.4f + Main.rand.NextFloat() * 0.4f + ChargeLevel * 0.1f;
-                    d.velocity *= 0.5f;
-                }
-            }
-        }
-        public void explosionEnd()
-        {
-            //smoke dust
-            for (int i = 0; i < 30 + ChargeLevel * 10; i++)
-            {
-                Dust d = Dust.NewDustDirect(projectile.position + new Vector2(projectile.width / 4, projectile.height / 4),
-                    projectile.width / 2, projectile.height / 2,
-                    31, 0f, 0f, 150, default(Color), 0.8f);
-                d.fadeIn = 1f + ChargeLevel * 0.2f;
-                d.velocity *= 5f;
-            }
-
-            int g = Gore.NewGore(projectile.Center - new Vector2(16, 16),
-                new Vector2(projectile.width, projectile.height), Main.rand.Next(61, 64), 1f);
-            Main.gore[g].scale *= 1 + 0.08f * ChargeLevel;
-            Main.gore[g].velocity *= 0.01f;
-
-            g = Gore.NewGore(projectile.Center - new Vector2(16, 16),
-                new Vector2(projectile.width, -projectile.height), Main.rand.Next(61, 64), 1f);
-            Main.gore[g].scale *= 1 + 0.08f * ChargeLevel;
-            Main.gore[g].velocity *= 0.01f;
-
-            g = Gore.NewGore(projectile.Center - new Vector2(16, 16),
-                new Vector2(-projectile.width, -projectile.height), Main.rand.Next(61, 64), 1f);
-            Main.gore[g].scale *= 1 + 0.08f * ChargeLevel;
-            Main.gore[g].velocity *= 0.01f;
-
-            g = Gore.NewGore(projectile.Center - new Vector2(16, 16),
-                new Vector2(-projectile.width, projectile.height), Main.rand.Next(61, 64), 1f);
-            Main.gore[g].scale *= 1 + 0.08f * ChargeLevel;
-            Main.gore[g].velocity *= 0.01f;
-
-            for (int i = 0; i < ChargeLevel - 3; i++)
-            {
-                Vector2 velocity = new Vector2(
-                    Main.rand.Next(-projectile.width, projectile.width + 1),
-                    Main.rand.Next(-projectile.height, projectile.height + 1));
-                //make into a circle
-                Vector2 normal = new Vector2(velocity.X * 0.5f, velocity.Y * 0.5f);
-                normal.Normalize();
-                normal.X = Math.Abs(normal.X);
-                normal.Y = Math.Abs(normal.Y);
-                velocity *= normal;
-                //make dust move distance of projectile size
-                float log = (float)Math.Log((double)(velocity.X * velocity.X + velocity.Y * velocity.Y));
-                velocity /= log;
-
-                g = Gore.NewGore(projectile.Center - new Vector2(16, 16), velocity, Main.rand.Next(61, 64), 1f);
-                Main.gore[g].scale *= 1 + 0.08f * ChargeLevel;
-                Main.gore[g].velocity *= 0.4f;
-                g = Gore.NewGore(projectile.Center - new Vector2(16, 16), velocity, Main.rand.Next(61, 64), 1f);
-                Main.gore[g].scale *= 1 + 0.08f * ChargeLevel;
-                Main.gore[g].velocity *= 0.2f;
-            }
         }
 
         private void pushAway()
@@ -268,7 +157,7 @@ namespace ArcaneAlchemist.Items.Flasks
 
                 Vector2 knockBack = (p.Center - projectile.Center);
                 knockBack.Normalize();
-                knockBack *= (projectile.width) / (projectile.width / 2 + dist * 2) * (6f + ChargeLevel * 0.5f);
+                knockBack *= 3;
                 ////-//Main.NewText("knockback: \n" + knockBack);
                 if (p.noKnockback)
                 { p.velocity = (p.velocity + knockBack * 2) / 3; }

@@ -8,6 +8,7 @@ namespace ArcaneAlchemist
     {
         public bool RisingStar;
         public bool FallingThunder;
+        public bool GelCanister;
 
         public static AlchemistPlayer ModPlayer(Player player)
         {
@@ -22,9 +23,6 @@ namespace ArcaneAlchemist
         public float arcaneDamageMult = 1f;
         public float arcaneKnockback;
         public int arcaneCrit;
-
-        public bool PacBat { get; internal set; }
-        public bool PacBatEX { get; internal set; }
 
         public override void ResetEffects()
         {
