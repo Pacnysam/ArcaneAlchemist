@@ -1,3 +1,0 @@
-Arcane Alchemist focuses on adding an alchemist class, and only that.
-
-Wip, currently only has 5 weapons

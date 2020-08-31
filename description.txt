@@ -1,0 +1,7 @@
+Arcane Alchemist focuses on adding an alchemist class, and only that.
+
+Heavy WIP, currently viable up to eye of cthulhu
+
+Made by Pacnysam
+
+Additional spriting help from Maskano
