@@ -22,11 +22,11 @@ namespace ArcaneAlchemist.Items.Flasks
             item.height = 24;
             item.useTime = 16;
             item.useAnimation = 16;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 3;
             item.value = 1000;
             item.maxStack = 1;
-            item.rare = 1;
+            item.rare = ItemRarityID.White;
             item.UseSound = SoundID.Item1;
             item.noMelee = true;
             item.shoot = ProjectileType<BasicFlaskP>();
@@ -50,7 +50,7 @@ namespace ArcaneAlchemist.Items.Flasks
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Basic Flask");
+            DisplayName.SetDefault("Bubble Flask");
         }
 
         public override void SetDefaults()
@@ -106,7 +106,7 @@ namespace ArcaneAlchemist.Items.Flasks
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 107);
+            Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 107);
             Gore.NewGore(projectile.position, -projectile.oldVelocity * 0.2f, 704, 1f);
             Gore.NewGore(projectile.position, -projectile.oldVelocity * 0.2f, 705, 1f);
             for (float k = 0; k < 6.28f; k += 0.25f)

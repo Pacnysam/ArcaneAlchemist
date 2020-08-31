@@ -14,7 +14,7 @@ namespace ArcaneAlchemist.Items.Accessories
 	public class GelCanister : AlchemistItem
 	{
 		public override void SetStaticDefaults() {
-            Tooltip.SetDefault("Every 300 damage dealt throws A gel canister at enemies\nEnemies struck by the canister take more damage from fire");
+            Tooltip.SetDefault("Every 300 arcane damage dealt throws A gel canister at enemies\nEnemies struck by the canister take more damage from fire");
         }
 
         public override void SafeSetDefaults()
@@ -46,7 +46,7 @@ namespace ArcaneAlchemist.Items.Accessories
 
         public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit) //runs when an npc is hit by the player's projectile
         {
-            if (proj.owner == player.whoAmI && canisterEffect && !target.immortal && proj.type != ProjectileType<BasicFlaskP>()) //check if vallid npc and effect is active
+            if (proj.owner == player.whoAmI && canisterEffect && !target.immortal && proj.type != ProjectileType<GelCanisterP>() && player.GetModPlayer<AlchemistPlayer>().arcane == true) //check if vallid npc and effect is active
             {
                 damageCount += damage; //count up
             }
@@ -66,7 +66,7 @@ namespace ArcaneAlchemist.Items.Accessories
             {
                 damageCount = 0;
 
-                Vector2 toPos = Vector2.Normalize(player.position - Main.MouseWorld) * 5f;
+                Vector2 toPos = Vector2.Normalize(player.position - Main.MouseWorld) * 7f;
                 Projectile.NewProjectile(player.position, toPos, ProjectileType<GelCanisterP>(), (int)(50), 0f, Main.myPlayer, 0f, 0f);
 
                 CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y, player.width/2, player.height/2), new Color(169, 248, 255, 100), "Counter Reset");
@@ -76,7 +76,6 @@ namespace ArcaneAlchemist.Items.Accessories
 
     public class GelCanisterP : ModProjectile
     {
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Gel Canister");
@@ -90,6 +89,8 @@ namespace ArcaneAlchemist.Items.Accessories
             projectile.friendly = true;
             projectile.aiStyle = 2;
             projectile.penetrate = -1;
+
+            projectile.GetGlobalProjectile<AlchemistProjectile>().arcane = true;
         }
         public override void AI()
         {
@@ -113,14 +114,7 @@ namespace ArcaneAlchemist.Items.Accessories
             Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 107);
             Gore.NewGore(projectile.position, -projectile.oldVelocity * 0.2f, 704, 1f);
             Gore.NewGore(projectile.position, -projectile.oldVelocity * 0.2f, 705, 1f);
-            for (float k = 0; k < 6.28f; k += 0.25f)
-            
-
-            if (Main.LocalPlayer.HasBuff(BuffType<Buffs.RisingStar>()) && projectile.owner == Main.myPlayer)
-            {
-                Dust dust;
-                dust = Terraria.Dust.NewDustPerfect(projectile.position, 277, new Vector2(0f, -1f), 0, new Color(255, 255, 255), 5f);
-            }
+            for (float k = 0; k < 6.28f; k += 0.25f) ;
         }
     }
 }

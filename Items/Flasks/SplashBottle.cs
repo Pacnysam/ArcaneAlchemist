@@ -123,6 +123,8 @@ namespace ArcaneAlchemist.Items.Flasks
             projectile.penetrate = -1;
             projectile.timeLeft = 24;
             projectile.tileCollide = false;
+
+            projectile.GetGlobalProjectile<AlchemistProjectile>().arcane = true;
         }
 
         public override void AI()
@@ -162,6 +164,8 @@ namespace ArcaneAlchemist.Items.Flasks
             projectile.penetrate = 1;
             projectile.ignoreWater = true;
             projectile.alpha = 50;
+
+            projectile.GetGlobalProjectile<AlchemistProjectile>().arcane = true;
         }
 
         public override void AI()

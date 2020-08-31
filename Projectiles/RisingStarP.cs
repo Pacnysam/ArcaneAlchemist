@@ -24,6 +24,8 @@ namespace ArcaneAlchemist.Projectiles
             projectile.penetrate = -1;
             projectile.tileCollide = false;
             projectile.timeLeft = 120;
+
+            projectile.GetGlobalProjectile<AlchemistProjectile>().arcane = true;
         }
 
         public override void AI()
@@ -46,6 +48,7 @@ namespace ArcaneAlchemist.Projectiles
                 projectile.position = player.Center;
                 Player p = Main.player[(int)projectile.ai[0]];
                 p.statLife += (int)(2);
+                player.HealEffect(2);
                 projectile.Kill();
             }
         }

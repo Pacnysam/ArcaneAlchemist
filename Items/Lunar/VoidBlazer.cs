@@ -79,6 +79,7 @@ namespace ArcaneAlchemist.Items.Lunar
             projectile.friendly = true;
             aiType = ProjectileID.CrystalDart;
             projectile.maxPenetrate = -1;
+            projectile.GetGlobalProjectile<AlchemistProjectile>().arcane = true;
         }
         
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

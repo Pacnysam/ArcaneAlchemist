@@ -27,6 +27,8 @@ namespace ArcaneAlchemist.Projectiles
             projectile.maxPenetrate = -1;
             projectile.timeLeft = 300;
             projectile.penetrate = 8;
+
+            projectile.GetGlobalProjectile<AlchemistProjectile>().arcane = true;
         }
         public override void AI()
         {

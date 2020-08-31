@@ -58,6 +58,8 @@ namespace ArcaneAlchemist.Items.Empowerments
             projectile.friendly = true;
             projectile.aiStyle = 5;
             projectile.penetrate = 3;
+
+            projectile.GetGlobalProjectile<AlchemistProjectile>().arcane = true;
         }
         public override void AI() 
         {

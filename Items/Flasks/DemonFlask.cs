@@ -118,8 +118,9 @@ namespace ArcaneAlchemist.Items.Flasks
             projectile.friendly = true;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
-
             projectile.netImportant = true;
+
+            projectile.GetGlobalProjectile<AlchemistProjectile>().arcane = true;
         }
 
         public override void AI()
