@@ -1,0 +1,54 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\pacny\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\ArcaneAlchemist\\ArcaneAlchemist.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\pacny\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\ArcaneAlchemist\\ArcaneAlchemist.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\pacny\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\ArcaneAlchemist\\ArcaneAlchemist.csproj",
+        "projectName": "ArcaneAlchemist",
+        "projectPath": "C:\\Users\\pacny\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\ArcaneAlchemist\\ArcaneAlchemist.csproj",
+        "packagesPath": "C:\\Users\\pacny\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pacny\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\ArcaneAlchemist\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\pacny\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net45"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net45": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net45": {
+          "dependencies": {
+            "tModLoader.CodeAssist": {
+              "target": "Package",
+              "version": "[0.1.*, )"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
