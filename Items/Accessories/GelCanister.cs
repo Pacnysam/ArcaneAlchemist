@@ -66,7 +66,7 @@ namespace ArcaneAlchemist.Items.Accessories
             {
                 damageCount = 0;
 
-                Vector2 toPos = Vector2.Normalize(player.position - Main.MouseWorld) * 7f;
+                Vector2 toPos = Vector2.Normalize(player.position + Main.MouseWorld) * 7f;
                 Projectile.NewProjectile(player.position, toPos, ProjectileType<GelCanisterP>(), (int)(50), 0f, Main.myPlayer, 0f, 0f);
 
                 CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y, player.width/2, player.height/2), new Color(169, 248, 255, 100), "Counter Reset");
