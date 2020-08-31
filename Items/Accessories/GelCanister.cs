@@ -93,7 +93,7 @@ namespace ArcaneAlchemist.Items.Accessories
         }
         public override void AI()
         {
-
+            //to be done later
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
