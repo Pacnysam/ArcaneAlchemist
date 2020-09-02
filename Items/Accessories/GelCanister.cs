@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using ArcaneAlchemist.Items.Flasks;
+using ArcaneAlchemist.Dusts;
 
 namespace ArcaneAlchemist.Items.Accessories
 {
@@ -31,24 +32,59 @@ namespace ArcaneAlchemist.Items.Accessories
         {
             player.GetModPlayer<GelCanisterEffect>().canisterEffect = true;
         }
+
+        public override void UpdateAccessory(Player player, bool hideVisual)
+        {
+            if (player.GetModPlayer<GelCanisterEffect>().damageCount >= player.GetModPlayer<GelCanisterEffect>().damageCountMax)
+            {
+                player.GetModPlayer<GelCanisterEffect>().damageCount = 0;
+
+                Vector2 toPos = Vector2.Normalize(Main.MouseWorld - player.position) * Main.rand.NextFloat(8f, 12f);
+                Projectile.NewProjectile(player.position, toPos, ProjectileType<GelCanisterP>(), (int)(item.damage), 0f, Main.myPlayer, 0f, 0f);
+
+                CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y, player.width / 2, player.height / 2), new Color(169, 248, 255, 100), "Counter Reset");
+            }
+        }
+    }
+
+    public class CanisterToss : AlchemistItem
+    {
+        public override string Texture => "ArcaneAlchemist/Items/Accessories/GelCanister";
+
+        public override void SafeSetDefaults()
+        {
+            item.damage = 50;
+            item.width = 22;
+            item.height = 32;
+            item.useTime = 20;
+            item.useAnimation = 20;
+            item.UseSound = SoundID.Item1;
+            item.shootSpeed = 12f;
+            item.value = Item.sellPrice(0, 1, 0, 0);
+            item.rare = ItemRarityID.Blue;
+            item.useStyle = ItemUseStyleID.SwingThrow;
+            item.noUseGraphic = true;
+            item.noMelee = true;
+            item.shoot = ProjectileType<GelCanisterP>();
+        }
     }
 
     public class GelCanisterEffect : ModPlayer
     {
-        public bool canisterEffect = false; //does the player get this effect
-        public int damageCount; //used to count as damage is dealt
+        public bool canisterEffect = false;
+        public int damageCount; 
         public int damageCountMax = 300;
 
-        public override void ResetEffects() //used to reset if the player unequips the accesory
+        public override void ResetEffects() 
         {
             canisterEffect = false;
         }
 
-        public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit) //runs when an npc is hit by the player's projectile
+        public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit) 
         {
-            if (proj.owner == player.whoAmI && canisterEffect && !target.immortal && proj.type != ProjectileType<GelCanisterP>() && player.GetModPlayer<AlchemistPlayer>().arcane == true) //check if vallid npc and effect is active
+            if (proj.owner == player.whoAmI && canisterEffect && !target.immortal && proj.type != ProjectileType<GelCanisterP>() && player.GetModPlayer<AlchemistPlayer>().arcane == true) 
             {
-                damageCount += damage; //count up
+                damageCount += damage;
             }
         }
 
@@ -62,15 +98,7 @@ namespace ArcaneAlchemist.Items.Accessories
 
         public override void PreUpdate()
         {
-            if (damageCount >= damageCountMax)
-            {
-                damageCount = 0;
-
-                Vector2 toPos = Vector2.Normalize(Main.MouseWorld - player.position) * 7f;
-                Projectile.NewProjectile(player.position, toPos, ProjectileType<GelCanisterP>(), (int)(50), 0f, Main.myPlayer, 0f, 0f);
-
-                CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y, player.width/2, player.height/2), new Color(169, 248, 255, 100), "Counter Reset");
-            }
+            
         }
     }
 
@@ -94,7 +122,23 @@ namespace ArcaneAlchemist.Items.Accessories
         }
         public override void AI()
         {
+            for (int I = 0; I < 2; I++)
+            {
+                if (Main.rand.Next(5) != 0)
+                {
+                    //slime color is (0, 80, 255)
+
+                    Dust lolwtf = Main.dust[Dust.NewDust(projectile.position, projectile.width, projectile.height, DustType<CompressedGelDust>(), projectile.velocity.X, projectile.velocity.Y, 100)];
+                    lolwtf.velocity = lolwtf.velocity / 4f + projectile.velocity / 2f;
+                    lolwtf.scale = 0.8f + Main.rand.NextFloat() * 0.4f;
+                    lolwtf.position = projectile.Center;
+                    lolwtf.position += new Vector2(projectile.width * 2, 0f).RotatedBy((float)Math.PI * 2f * Main.rand.NextFloat()) * Main.rand.NextFloat();
+                    lolwtf.noLight = true;
+                }
+            }
+
             //to be done later
+            //DD2OgreSpit = 676
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -111,10 +155,7 @@ namespace ArcaneAlchemist.Items.Accessories
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 107);
-            Gore.NewGore(projectile.position, -projectile.oldVelocity * 0.2f, 704, 1f);
-            Gore.NewGore(projectile.position, -projectile.oldVelocity * 0.2f, 705, 1f);
-            for (float k = 0; k < 6.28f; k += 0.25f) ;
+            
         }
     }
 }

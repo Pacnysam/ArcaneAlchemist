@@ -70,7 +70,7 @@ namespace ArcaneAlchemist.Items.Flasks
                 {
                     Dust dust;
                     Vector2 position = Main.LocalPlayer.Center;
-                    dust = Terraria.Dust.NewDustDirect(projectile.position, projectile.width / 2, projectile.height / 2, 276, 0f, -2f, 0, new Color(255, 255, 255), 1f);
+                    dust = Terraria.Dust.NewDustDirect(projectile.position, projectile.width / 2, projectile.height / 2, DustType<FallingThunder>(), 0f, -2f, 0, new Color(255, 255, 255), 1f);
                     dust.noLight = true;
                 }
 
@@ -79,7 +79,7 @@ namespace ArcaneAlchemist.Items.Flasks
             if (Main.LocalPlayer.HasBuff(BuffType<Buffs.RisingStar>()) && projectile.owner == Main.myPlayer)
             {
                 Dust dust;
-                dust = Terraria.Dust.NewDustPerfect(projectile.position, 277, new Vector2(0f, 0f), 0, new Color(255, 255, 255), 1f);
+                dust = Terraria.Dust.NewDustPerfect(projectile.position, DustType<RisingStar>(), new Vector2(0f, 0f), 0, new Color(255, 255, 255), 1f);
                 dust.noLight = true;
 
             }
@@ -89,12 +89,12 @@ namespace ArcaneAlchemist.Items.Flasks
         {
             if (Main.LocalPlayer.HasBuff(BuffType<Buffs.RisingStar>()) && projectile.owner == Main.myPlayer)
             {
-                Projectile.NewProjectile(projectile.position, (projectile.velocity * 0), ProjectileType<RisingStarP>(), (int)(projectile.damage * 0.2), 0f, projectile.owner, 0f, 0f);
+                Projectile.NewProjectile(projectile.position, (projectile.velocity * 0), ProjectileType<RisingStarP>(), (int)(1), 0f, projectile.owner, 0f, 0f);
             }
 
             if (Main.LocalPlayer.HasBuff(BuffType<Buffs.FallingThunder>()) && projectile.owner == Main.myPlayer)
             {
-                Projectile.NewProjectile(projectile.position, (projectile.velocity * 0), ProjectileType<FallingThunderP>(), (int)(projectile.damage), 0f, projectile.owner, 0f, 0f);
+                Projectile.NewProjectile(projectile.position, (projectile.velocity * 0), ProjectileType<FallingThunderP>(), (int)(projectile.damage/2), 0f, projectile.owner, 0f, 0f);
             }
         }
 
@@ -115,7 +115,7 @@ namespace ArcaneAlchemist.Items.Flasks
             if (Main.LocalPlayer.HasBuff(BuffType<Buffs.RisingStar>()) && projectile.owner == Main.myPlayer)
             {
                 Dust dust;
-                dust = Terraria.Dust.NewDustPerfect(projectile.position, 277, new Vector2(0f, -1f), 0, new Color(255, 255, 255), 5f);
+                dust = Terraria.Dust.NewDustPerfect(projectile.position, DustType<RisingStar>(), new Vector2(0f, -1f), 0, new Color(255, 255, 255), 5f);
             }
         }
     }

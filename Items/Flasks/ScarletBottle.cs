@@ -78,14 +78,14 @@ namespace ArcaneAlchemist.Items.Flasks
             projectile.ai[1]++;
             if (projectile.ai[1] > 7)
             {
-                int flamelet = Projectile.NewProjectile(projectile.Center, Vector2.Zero, ProjectileID.MolotovFire, (1), 0f, projectile.owner);
-                Main.projectile[flamelet].penetrate = 2;
+                int flamelet = Projectile.NewProjectile(projectile.Center, Vector2.Zero, ProjectileID.MolotovFire, (3), 0f, projectile.owner);
+                Main.projectile[flamelet].penetrate = 1;
 
                 projectile.ai[1] = 0;
 
                 if (Main.LocalPlayer.HasBuff(BuffType<Buffs.RisingStar>()) && Main.rand.NextFloat() < 0.1f)
                 {
-                    Projectile.NewProjectile(projectile.position, (projectile.velocity * 0), ProjectileType<RisingStarP>(), (int)(projectile.damage), 0f, projectile.owner, 0f, 0f);
+                    Projectile.NewProjectile(projectile.position, (projectile.velocity * 0), ProjectileType<RisingStarP>(), (int)(1), 0f, projectile.owner, 0f, 0f);
                 }
 
                 if (Main.LocalPlayer.HasBuff(BuffType<Buffs.FallingThunder>()) && Main.rand.NextFloat() < 0.1f)
@@ -105,7 +105,7 @@ namespace ArcaneAlchemist.Items.Flasks
         {
             if (Main.LocalPlayer.HasBuff(BuffType<Buffs.FallingThunder>()) && projectile.owner == Main.myPlayer)
             {
-                Projectile.NewProjectile(projectile.position, (projectile.velocity * 0), ProjectileType<FallingThunderP>(), (int)(projectile.damage), 0f, projectile.owner, 0f, 0f);
+                Projectile.NewProjectile(projectile.position, (projectile.velocity * 0), ProjectileType<FallingThunderP>(), (int)(projectile.damage/2), 0f, projectile.owner, 0f, 0f);
             }
         }
 
@@ -115,8 +115,8 @@ namespace ArcaneAlchemist.Items.Flasks
             if (Main.LocalPlayer.HasBuff(BuffType<Buffs.FallingThunder>()) && projectile.owner == Main.myPlayer)
             {
                 Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 107), projectile.Center);
-                int burst = Projectile.NewProjectile(projectile.Center, Vector2.Zero, ProjectileID.InfernoFriendlyBlast, projectile.damage / 2, 0f, projectile.owner);
-                Main.projectile[burst].timeLeft = 150;
+                int burst = Projectile.NewProjectile(projectile.Center, Vector2.Zero, ProjectileType<DemonBurst>(), projectile.damage / 2, 0f, projectile.owner);
+                Main.projectile[burst].timeLeft = 50;
             }
             else
             {

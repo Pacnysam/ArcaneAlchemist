@@ -71,7 +71,7 @@ namespace ArcaneAlchemist.Items.Flasks
                 {
                     Dust dust;
                     Vector2 position = Main.LocalPlayer.Center;
-                    dust = Terraria.Dust.NewDustDirect(projectile.position, projectile.width / 2, projectile.height / 2, 276, 0f, -2f, 0, new Color(255, 255, 255), 1f);
+                    dust = Terraria.Dust.NewDustDirect(projectile.position, projectile.width / 2, projectile.height / 2, DustType<FallingThunder>(), 0f, -2f, 0, new Color(255, 255, 255), 1f);
                     dust.noLight = true;
                 }
             }
@@ -79,7 +79,7 @@ namespace ArcaneAlchemist.Items.Flasks
             if (Main.LocalPlayer.HasBuff(BuffType<Buffs.RisingStar>()) && projectile.owner == Main.myPlayer)
             {
                 Dust dust;
-                dust = Terraria.Dust.NewDustPerfect(projectile.position, 277, new Vector2(0f, 0f), 0, new Color(255, 255, 255), 1f);
+                dust = Terraria.Dust.NewDustPerfect(projectile.position, DustType<RisingStar>(), new Vector2(0f, 0f), 0, new Color(255, 255, 255), 1f);
                 dust.noLight = true;
 
             }
@@ -168,19 +168,22 @@ namespace ArcaneAlchemist.Items.Flasks
             projectile.GetGlobalProjectile<AlchemistProjectile>().arcane = true;
         }
 
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            if (Main.LocalPlayer.HasBuff(BuffType<Buffs.RisingStar>()) && Main.rand.Next(1, 5) == 3)
+            {
+                Projectile.NewProjectile(projectile.position, (projectile.velocity * 0), ProjectileType<RisingStarP>(), (int)(2), 0f, projectile.owner, 0f, 0f);
+            }
+            
+            if (Main.LocalPlayer.HasBuff(BuffType<Buffs.FallingThunder>()) && Main.rand.Next(1, 5) == 3)
+            {
+                Projectile.NewProjectile(projectile.position, (projectile.velocity * 0), ProjectileType<FallingThunderP>(), (int)(projectile.damage/2), 0f, projectile.owner, 0f, 0f);
+            }
+        }
+
         public override void AI()
         {
             projectile.ai[1]++;
-
-            if (Main.LocalPlayer.HasBuff(BuffType<Buffs.RisingStar>()) && Main.rand.NextFloat() < 0.001)
-            {
-                Projectile.NewProjectile(projectile.position, (projectile.velocity * 0), ProjectileType<RisingStarP>(), (int)(projectile.damage), 0f, projectile.owner, 0f, 0f);
-            }
-
-            if (Main.LocalPlayer.HasBuff(BuffType<Buffs.FallingThunder>()) && Main.rand.NextFloat() < 0.001f)
-            {
-                Projectile.NewProjectile(projectile.position, (projectile.velocity * 0), ProjectileType<FallingThunderP>(), (int)(projectile.damage), 0f, projectile.owner, 0f, 0f);
-            }
 
             if (projectile.ai[1] <= 2) 
             {

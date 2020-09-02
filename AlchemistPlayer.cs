@@ -1,5 +1,6 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace ArcaneAlchemist
 {
@@ -9,6 +10,7 @@ namespace ArcaneAlchemist
         public bool RisingStar;
         public bool FallingThunder;
         public bool GelCanister;
+        public bool CoreOfGel;
 
         public static AlchemistPlayer ModPlayer(Player player)
         {
@@ -41,6 +43,30 @@ namespace ArcaneAlchemist
             arcaneDamageMult = 1f;
             arcaneKnockback = 0f;
             arcaneCrit = 4;
+        }
+
+        public override void UpdateEquips(ref bool wallSpeedBuff, ref bool tileSpeedBuff, ref bool tileRangeBuff)
+        {
+            if (CoreOfGel == true)
+            {
+                player.maxMinions++;
+            }
+        }
+
+        public override TagCompound Save()
+        {
+            return new TagCompound
+            {
+                {
+                    "CoreOfGel",
+                    CoreOfGel
+                },
+            };
+        }
+
+        public override void Load(TagCompound tag)
+        {
+            CoreOfGel = tag.Get<bool>("CoreOfGel");
         }
     }
 }

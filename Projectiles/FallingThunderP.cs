@@ -34,7 +34,7 @@ namespace ArcaneAlchemist.Projectiles
         {
             Dust dust;
             Vector2 position = Main.LocalPlayer.Center;
-            dust = Terraria.Dust.NewDustDirect(projectile.position, projectile.width / 2, projectile.height / 2, 276, 0f, -2f, 150, new Color(255, 255, 255), 0.3f);
+            dust = Terraria.Dust.NewDustDirect(projectile.position, projectile.width / 2, projectile.height / 2, DustType<FallingThunder>(), 0f, -2f, 150, new Color(255, 255, 255), 0.3f);
             dust.noLight = true;
             dust.shader = GameShaders.Armor.GetSecondaryShader(29, Main.LocalPlayer);
         }
