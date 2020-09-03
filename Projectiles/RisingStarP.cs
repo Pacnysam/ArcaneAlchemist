@@ -26,7 +26,7 @@ namespace ArcaneAlchemist.Projectiles
             projectile.tileCollide = false;
             projectile.timeLeft = 120;
             projectile.extraUpdates = 1;
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[projectile.type] = 0;
 
             projectile.GetGlobalProjectile<AlchemistProjectile>().arcane = true;

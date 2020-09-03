@@ -18,7 +18,7 @@ namespace ArcaneAlchemist.Items.Empowerments
             item.width = 32;
             item.height = 32;
             item.shoot = ProjectileType<FallingThunderP>();
-            item.shootSpeed = 16f;
+            item.shootSpeed = 4f;
             item.buffType = BuffType<Buffs.FallingThunder>();
             item.buffTime = 300;
             item.useStyle = 4;

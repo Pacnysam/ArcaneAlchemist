@@ -102,8 +102,6 @@ namespace ArcaneAlchemist.Items.Flasks
 
     public class DemonBurst : ModProjectile
     {
-        private int ChargeLevel { get { return (int)projectile.ai[0]; } set { projectile.ai[0] = value; } }
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Demon Burst");
@@ -173,7 +171,7 @@ namespace ArcaneAlchemist.Items.Flasks
 
                 Vector2 knockBack = (n.Center - projectile.Center);
                 knockBack.Normalize();
-                knockBack *= (projectile.width) / (projectile.width / 2 + dist * 2) * (6f + ChargeLevel * 0.5f);
+                knockBack *= (projectile.width) / (projectile.width / 2 + dist * 2) * (6f * 0.5f);
                 //Main.NewText("knockback: \n" + projectile.knockBack);
                 knockBack *= (n.knockBackResist * 0.8f + 0.1f) * (1 + projectile.knockBack / 3);
 

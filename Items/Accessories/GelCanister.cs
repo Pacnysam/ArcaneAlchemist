@@ -82,7 +82,7 @@ namespace ArcaneAlchemist.Items.Accessories
 
         public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit) 
         {
-            if (proj.owner == player.whoAmI && canisterEffect && !target.immortal && proj.type != ProjectileType<GelCanisterP>() && player.GetModPlayer<AlchemistPlayer>().arcane == true) 
+            if (proj.owner == player.whoAmI && canisterEffect && !target.immortal && proj.type != ProjectileType<GelCanisterP>() && proj.type != ProjectileType<CanisterBoom>() && player.GetModPlayer<AlchemistPlayer>().arcane == true) 
             {
                 damageCount += damage;
             }
@@ -136,15 +136,12 @@ namespace ArcaneAlchemist.Items.Accessories
                     lolwtf.noLight = true;
                 }
             }
-
-            //to be done later
-            //DD2OgreSpit = 676
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-                target.AddBuff(BuffID.Slimed, 600);
-            target.AddBuff(BuffID.Oiled, 600);
+                target.AddBuff(BuffID.Slimed, 1200);
+            target.AddBuff(BuffID.Oiled, 1200);
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -155,7 +152,37 @@ namespace ArcaneAlchemist.Items.Accessories
 
         public override void Kill(int timeLeft)
         {
-            
+            Projectile.NewProjectile(projectile.position, projectile.velocity * 0, ProjectileType<CanisterBoom>(), (int)(projectile.damage), 0f, projectile.owner, 0f, 0f);
+        }
+    }
+
+    public class CanisterBoom : ModProjectile
+    {
+        public override string Texture => "ArcaneAlchemist/BlankTexture";
+
+        public override void SetDefaults()
+        {
+            projectile.arrow = false;
+            projectile.tileCollide = false;
+            projectile.width = 300;
+            projectile.height = 300;
+            projectile.friendly = true;
+            projectile.penetrate = -1;
+            projectile.timeLeft = 100;
+            projectile.extraUpdates = 100;
+
+            projectile.GetGlobalProjectile<AlchemistProjectile>().arcane = true;
+        }
+
+        public override void AI()
+        {
+            Dust dust = Main.dust[Terraria.Dust.NewDust(projectile.Center, 1, 1, DustType<CompressedGelDust>(), Main.rand.Next(-7, 7), Main.rand.Next(-7, 7), 100, new Color(255, 255, 255), 1f)];
+        }
+
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.AddBuff(BuffID.Slimed, 600);
+            target.AddBuff(BuffID.Oiled, 600);
         }
     }
 }
