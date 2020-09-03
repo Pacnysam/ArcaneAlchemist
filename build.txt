@@ -1,6 +1,7 @@
 displayName = Arcane Alchemist
 author = Pacnysam
-version = 0.0.6.1
+version = 0.0.6.2
+homepage = https://discord.gg/SedXbNx
 hideCode = true
 includeSource = false
 buildIgnore = .gitignore, *.sln, *.csproj, *.user, obj\*, bin\*, .vs\*, Properties\*, .git\*
