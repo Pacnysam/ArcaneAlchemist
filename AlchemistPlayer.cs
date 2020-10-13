@@ -17,9 +17,6 @@ namespace ArcaneAlchemist
             return player.GetModPlayer<AlchemistPlayer>();
         }
 
-        // Vanilla only really has damage multipliers in code
-        // And crit and knockback is usually just added to
-        // As a modder, you could make separate variables for multipliers and simple addition bonuses
         public bool arcane;
         public float arcaneDamageAdd;
         public float arcaneDamageMult = 1f;

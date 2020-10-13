@@ -6,12 +6,12 @@ using Terraria.ModLoader;
 
 namespace ArcaneAlchemist.Items.Lunar
 {
-    public class VoidFragment : ModItem
+    public class HorizonFragment : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Void Fragment");
-            Tooltip.SetDefault("'The hunger of the universe is encapsulated in this fragment'");
+            DisplayName.SetDefault("Horizon Fragment");
+            Tooltip.SetDefault("'The end of space is reflected across this fragment'");
         }
 
         public override void SetDefaults()

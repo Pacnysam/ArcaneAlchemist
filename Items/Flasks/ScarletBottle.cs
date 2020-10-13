@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 
 namespace ArcaneAlchemist.Items.Flasks
 {
-	public class ScarletBottle : AlchemistItem
+    internal class ScarletBottle : AlchemistItem
 	{
         public override void SetStaticDefaults()
         {
@@ -23,16 +23,12 @@ namespace ArcaneAlchemist.Items.Flasks
             item.height = 24;
             item.useTime = 50;
             item.useAnimation = 50;
-            item.useStyle = 1;
             item.knockBack = 3;
             item.value = 5000;
             item.maxStack = 1;
             item.rare = 2;
-            item.UseSound = SoundID.Item1;
-            item.noMelee = true;
             item.shoot = ProjectileType<ScarletBottleP>();
             item.shootSpeed = 13f;
-            item.noUseGraphic = true;
         }
 
         public override void AddRecipes()
@@ -57,11 +53,8 @@ namespace ArcaneAlchemist.Items.Flasks
 
         public override void SetDefaults()
         {
-            projectile.arrow = false;
             projectile.width = 10;
             projectile.height = 10;
-            projectile.friendly = true;
-            projectile.aiStyle = 2;
             projectile.penetrate = 1;
         }
         public override void AI()
@@ -82,16 +75,6 @@ namespace ArcaneAlchemist.Items.Flasks
                 Main.projectile[flamelet].penetrate = 1;
 
                 projectile.ai[1] = 0;
-
-                if (Main.LocalPlayer.HasBuff(BuffType<Buffs.RisingStar>()) && Main.rand.NextFloat() < 0.1f)
-                {
-                    Projectile.NewProjectile(projectile.position, (projectile.velocity * 0), ProjectileType<RisingStarP>(), (int)(1), 0f, projectile.owner, 0f, 0f);
-                }
-
-                if (Main.LocalPlayer.HasBuff(BuffType<Buffs.FallingThunder>()) && Main.rand.NextFloat() < 0.1f)
-                {
-                    Projectile.NewProjectile(projectile.position, (projectile.velocity * 0), ProjectileType<FallingThunderP>(), (int)(projectile.damage), 0f, projectile.owner, 0f, 0f);
-                }
             }
         }
 
@@ -103,27 +86,13 @@ namespace ArcaneAlchemist.Items.Flasks
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if (Main.LocalPlayer.HasBuff(BuffType<Buffs.FallingThunder>()) && projectile.owner == Main.myPlayer)
-            {
-                Projectile.NewProjectile(projectile.position, (projectile.velocity * 0), ProjectileType<FallingThunderP>(), (int)(projectile.damage/2), 0f, projectile.owner, 0f, 0f);
-            }
         }
 
         public override void Kill(int timeLeft)
         {
-
-            if (Main.LocalPlayer.HasBuff(BuffType<Buffs.FallingThunder>()) && projectile.owner == Main.myPlayer)
-            {
-                Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 107), projectile.Center);
-                int burst = Projectile.NewProjectile(projectile.Center, Vector2.Zero, ProjectileType<DemonBurst>(), projectile.damage / 2, 0f, projectile.owner);
-                Main.projectile[burst].timeLeft = 50;
-            }
-            else
-            {
                 Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 107), projectile.Center);
                 int burst = Projectile.NewProjectile(projectile.Center, Vector2.Zero, ProjectileID.InfernoFriendlyBlast, projectile.damage / 2, 0f, projectile.owner);
                 Main.projectile[burst].timeLeft = 50;
-            }
         }
     }
 }

@@ -5,7 +5,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace ArcaneAlchemist.Items.Empowerments
 {
-	public class StarRod : AlchemistItem
+    internal class StarRod : AlchemistItem
 	{
 		public override void SetStaticDefaults() {
             Tooltip.SetDefault("Gives all arcane weapons lifesteal and Makes a star shoot to damage enemies \n''It came from the light of the stars''");

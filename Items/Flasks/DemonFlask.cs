@@ -12,7 +12,7 @@ using Terraria.Localization;
 
 namespace ArcaneAlchemist.Items.Flasks
 {
-	public class DemonFlask : AlchemistItem
+	internal class DemonFlask : AlchemistItem
 	{
         public override void SetStaticDefaults()
         {
@@ -102,6 +102,8 @@ namespace ArcaneAlchemist.Items.Flasks
 
     public class DemonBurst : ModProjectile
     {
+        public override string Texture => "ArcaneAlchemist/BlankTexture";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Demon Burst");
@@ -117,8 +119,6 @@ namespace ArcaneAlchemist.Items.Flasks
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
             projectile.netImportant = true;
-
-            projectile.GetGlobalProjectile<AlchemistProjectile>().arcane = true;
         }
 
         public override void AI()
@@ -165,7 +165,7 @@ namespace ArcaneAlchemist.Items.Flasks
             }
             foreach (NPC n in Main.npc)
             {
-                if (!n.active || n.life <= 0 || (n.realLife >= 0 && n.realLife != n.whoAmI) || (n.knockBackResist == 0 && n.velocity == default(Vector2))) continue;
+                if (!n.active || n.life <= 0 || (n.realLife >= 0 && n.realLife != n.whoAmI) || (n.knockBackResist == 0 && n.velocity == default(Vector2)) && n.immortal == false) continue;
                 float dist = n.Distance(projectile.Center);
                 if (dist > projectile.width) continue;
 

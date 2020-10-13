@@ -12,7 +12,7 @@ using ArcaneAlchemist.Dusts;
 
 namespace ArcaneAlchemist.Items.Accessories
 {
-	public class GelCanister : AlchemistItem
+    internal class GelCanister : AlchemistItem
 	{
 		public override void SetStaticDefaults() {
             Tooltip.SetDefault("Every 300 damage dealt throws A gel canister at enemies\nEnemies struck by the canister take more damage from fire");
@@ -47,7 +47,7 @@ namespace ArcaneAlchemist.Items.Accessories
         }
     }
 
-    public class CanisterToss : AlchemistItem
+    internal class CanisterToss : AlchemistItem
     {
         public override string Texture => "ArcaneAlchemist/Items/Accessories/GelCanister";
 

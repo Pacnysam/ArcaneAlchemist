@@ -6,7 +6,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace ArcaneAlchemist.Items.Empowerments
 {
-	public class GlowingRiver : AlchemistItem
+    internal class GlowingRiver : AlchemistItem
 	{
 		public override void SetStaticDefaults() {
             Tooltip.SetDefault("Greatly increases arcane damage \n''It came from the depths of the dungeon''");

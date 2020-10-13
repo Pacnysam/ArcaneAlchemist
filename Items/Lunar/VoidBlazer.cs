@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ArcaneAlchemist.Items.Lunar
 {
-	public class VoidBlazer : AlchemistItem
+    internal class VoidBlazer : AlchemistItem
 	{
         public override void SetStaticDefaults()
         {

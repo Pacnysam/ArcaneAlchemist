@@ -26,7 +26,7 @@ namespace ArcaneAlchemist
                 Item.NewItem(npc.getRect(), ItemType<Items.Empowerments.StarRod>(), 1);
 
             if ((Main.player[Player.FindClosest(npc.position, npc.width, npc.height)].ZoneBeach) && Main.rand.Next(2) == 0)
-                Item.NewItem(npc.getRect(), ItemType<Items.Placeable.SplashGem>(), Main.rand.Next(1, 4));
+                Item.NewItem(npc.getRect(), ItemType<Items.Sets.Splash.SplashGem>(), Main.rand.Next(1, 4));
 
             if ((Main.player[Player.FindClosest(npc.position, npc.width, npc.height)].ZoneRockLayerHeight) && Main.rand.Next(8) == 0)
                 Item.NewItem(npc.getRect(), ItemType<Items.CornifersNotes>(), 1);

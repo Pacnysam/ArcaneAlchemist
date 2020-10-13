@@ -7,7 +7,7 @@ using ArcaneAlchemist.Projectiles;
 
 namespace ArcaneAlchemist.Items.Empowerments
 {
-	public class IlluminantLake : AlchemistItem
+    internal class IlluminantLake : AlchemistItem
 	{
 		public override void SetStaticDefaults() {
             Tooltip.SetDefault("Right Click gives all arcane weapons lifesteal \nLeft Click greatly increases arcane damage \n''The pearl shines brightly.''");
